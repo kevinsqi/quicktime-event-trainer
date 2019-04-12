@@ -28,6 +28,7 @@ function RandomIcon({ iconName }: any) {
 function App() {
   const [countCorrect, setCountCorrect] = React.useState(0);
   const [countAttempts, setCountAttempts] = React.useState(0);
+  const [iconPressed, setIconPressed] = React.useState<string | null>(null);
 
   const [iconName, setIconName] = React.useState<string>("empty");
   React.useEffect(
@@ -44,6 +45,7 @@ function App() {
         const iconName: string = mapping[index];
         setIconName(iconName);
         setCountAttempts(countAttempts + 1);
+        setIconPressed(null);
       }, 1000);
 
       return () => {
@@ -62,13 +64,14 @@ function App() {
         ArrowDown: "x"
       };
       const iconPressed = mapping[event.key];
-      console.log(iconPressed, iconName);
       if (iconPressed === iconName) {
+        // TODO: fix bug with repeated additions
         setCountCorrect(countCorrect + 1);
       }
+      setIconPressed(iconPressed);
     },
     {},
-    { dependencies: [iconName, countCorrect] }
+    { dependencies: [iconName, iconPressed, countCorrect] }
   );
 
   return (
@@ -76,7 +79,12 @@ function App() {
       <div style={{ fontSize: 40 }}>
         {countCorrect} / {countAttempts}
       </div>
-      <div style={{ fontSize: 100 }}>
+      <div
+        style={{
+          fontSize: 100,
+          color: iconPressed === iconName ? "blue" : "black"
+        }}
+      >
         <RandomIcon iconName={iconName} />
       </div>
     </div>
