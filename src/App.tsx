@@ -6,18 +6,37 @@ import _ from "lodash";
 import "./App.css";
 
 function RandomIcon() {
-  const index = _.random(0, 3);
+  const [iconName, setIconName] = React.useState<string>("circle");
 
-  if (index === 0) {
+  React.useEffect(() => {
+    let timer: any;
+    timer = setInterval(() => {
+      const index = _.random(0, 3);
+      const mapping: { [key: number]: string } = {
+        0: "x",
+        1: "circle",
+        2: "square",
+        3: "triangle"
+      };
+      const iconName: string = mapping[index];
+      setIconName(iconName);
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  if (iconName === "x") {
     return <MdClear />;
   }
-  if (index === 1) {
+  if (iconName === "circle") {
     return <IoIosRadioButtonOff />;
   }
-  if (index === 2) {
+  if (iconName === "square") {
     return <IoIosSquareOutline />;
   }
-  if (index === 3) {
+  if (iconName === "triangle") {
     return <GiTriangleTarget />;
   }
   throw new Error("Invalid index");
