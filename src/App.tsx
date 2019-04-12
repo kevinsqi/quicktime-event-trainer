@@ -26,8 +26,10 @@ function RandomIcon() {
 class App extends Component {
   render() {
     return (
-      <div>
-        <RandomIcon />
+      <div className="d-flex align-items-center justify-content-center width-full height-full">
+        <div style={{ fontSize: 100 }}>
+          <RandomIcon />
+        </div>
       </div>
     );
   }
