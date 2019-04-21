@@ -1,9 +1,13 @@
 import React from "react";
+import CircularProgressbar from "react-circular-progressbar";
 import { MdClear } from "react-icons/md";
 import { IoIosSquareOutline, IoIosRadioButtonOff } from "react-icons/io";
 import { GiTriangleTarget } from "react-icons/gi";
 import useKey from "use-key-hook";
 import _ from "lodash";
+
+// Stylesheets
+import "react-circular-progressbar/dist/styles.css";
 import "./App.css";
 
 function RandomIcon({ iconName }: any) {
@@ -87,6 +91,7 @@ function App() {
       >
         <RandomIcon iconName={iconName} />
       </div>
+      <CircularProgressbar percentage={50} />
     </div>
   );
 }
