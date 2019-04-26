@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/react-circular-progressbar/precache-manifest.59829c28a4f6fdfdd11ca8b557811ede.js"
+  "/quicktime-event-trainer/precache-manifest.a18a36fc9f21ad3e906509d709fb0c82.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/react-circular-progressbar/index.html", {
+workbox.routing.registerNavigationRoute("/quicktime-event-trainer/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
