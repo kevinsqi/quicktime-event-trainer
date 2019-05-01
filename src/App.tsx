@@ -31,29 +31,26 @@ function App() {
   const [iconPressed, setIconPressed] = React.useState<string | null>(null);
 
   const [iconName, setIconName] = React.useState<string>("empty");
-  React.useEffect(
-    () => {
-      let timer: any;
-      timer = setInterval(() => {
-        const index = _.random(0, 3);
-        const mapping: { [key: number]: string } = {
-          0: "x",
-          1: "circle",
-          2: "square",
-          3: "triangle"
-        };
-        const iconName: string = mapping[index];
-        setIconName(iconName);
-        setCountAttempts(countAttempts + 1);
-        setIconPressed(null);
-      }, 1000);
-
-      return () => {
-        window.clearInterval(timer);
+  React.useEffect(() => {
+    let timer: any;
+    timer = setInterval(() => {
+      const index = _.random(0, 3);
+      const mapping: { [key: number]: string } = {
+        0: "x",
+        1: "circle",
+        2: "square",
+        3: "triangle"
       };
-    },
-    [countAttempts, iconName]
-  );
+      const iconName: string = mapping[index];
+      setIconName(iconName);
+      setCountAttempts(countAttempts + 1);
+      setIconPressed(null);
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [countAttempts, iconName]);
 
   useKey(
     (pressedKey: number, event: any) => {
@@ -63,12 +60,10 @@ function App() {
         ArrowUp: "triangle",
         ArrowDown: "x"
       };
-      const iconPressed = mapping[event.key];
-      if (iconPressed === iconName) {
-        // TODO: fix bug with repeated additions
+      if (!iconPressed && mapping[event.key] === iconName) {
         setCountCorrect(countCorrect + 1);
+        setIconPressed(mapping[event.key]);
       }
-      setIconPressed(iconPressed);
     },
     {},
     { dependencies: [iconName, iconPressed, countCorrect] }
