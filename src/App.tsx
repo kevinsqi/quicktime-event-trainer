@@ -73,21 +73,23 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
     };
   }, [mode]);
 
+  const KEYS_TO_ICON_NAMES: { [key: string]: string } = {
+    ArrowLeft: "square",
+    ArrowRight: "circle",
+    ArrowUp: "triangle",
+    ArrowDown: "x"
+  };
+
   useKey(
     (pressedKey: number, event: any) => {
-      const mapping: { [key: string]: string } = {
-        ArrowLeft: "square",
-        ArrowRight: "circle",
-        ArrowUp: "triangle",
-        ArrowDown: "x"
-      };
-      if (!iconPressed && mapping[event.key] === iconName) {
-        setCountCorrect(countCorrect + 1);
-        setIconPressed(mapping[event.key]);
+      const newIconPressed = KEYS_TO_ICON_NAMES[event.key];
+      if (!iconPressed && newIconPressed === iconName) {
+        setCountCorrect(countCorrect => countCorrect + 1);
+        setIconPressed(newIconPressed);
       }
     },
     {},
-    { dependencies: [iconName, iconPressed, countCorrect] }
+    { dependencies: [iconName, iconPressed] }
   );
 
   return (
