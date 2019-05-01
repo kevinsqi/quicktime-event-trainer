@@ -25,12 +25,18 @@ function RandomIcon({ iconName }: any) {
   throw new Error("Invalid index");
 }
 
-function App() {
+enum Mode {
+  Playing = "Playing",
+  Paused = "Paused",
+  Stopped = "Stopped"
+}
+
+function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
   const [countCorrect, setCountCorrect] = React.useState(0);
   const [countAttempts, setCountAttempts] = React.useState(0);
   const [iconPressed, setIconPressed] = React.useState<string | null>(null);
-
   const [iconName, setIconName] = React.useState<string>("empty");
+
   React.useEffect(() => {
     let timer: any;
     timer = setInterval(() => {
@@ -82,8 +88,30 @@ function App() {
       >
         <RandomIcon iconName={iconName} />
       </div>
+      <div>
+        <button
+          className="btn btn-secondary-outline"
+          onClick={() => setMode(Mode.Paused)}
+        >
+          Pause
+        </button>
+      </div>
     </div>
   );
+}
+
+function IntroScreen({ setMode }: { setMode: Function }) {
+  return <div onClick={() => setMode(Mode.Playing)}>Hello</div>;
+}
+
+function App() {
+  const [mode, setMode] = React.useState<Mode>(Mode.Stopped);
+
+  if (mode === Mode.Playing || mode === Mode.Paused) {
+    return <Trainer mode={mode} setMode={setMode} />;
+  } else {
+    return <IntroScreen setMode={setMode} />;
+  }
 }
 
 export default App;
