@@ -1,10 +1,27 @@
 import React from "react";
-import { MdClear } from "react-icons/md";
-import { IoIosSquareOutline, IoIosRadioButtonOff } from "react-icons/io";
+import {
+  FaArrowUp,
+  FaArrowDown,
+  FaArrowLeft,
+  FaArrowRight
+} from "react-icons/fa";
 import { GiTriangleTarget } from "react-icons/gi";
+import { IoIosSquareOutline, IoIosRadioButtonOff } from "react-icons/io";
+import { MdClear } from "react-icons/md";
 import useKey from "use-key-hook";
 import _ from "lodash";
 import "./App.css";
+
+function Icon({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="d-inline-block"
+      style={{ fontSize: "3em", background: "#ccc", borderRadius: "100px" }}
+    >
+      {children}
+    </div>
+  );
+}
 
 function RandomIcon({ iconName }: any) {
   if (iconName === "empty") {
@@ -124,7 +141,43 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
 }
 
 function IntroScreen({ setMode }: { setMode: Function }) {
-  return <div onClick={() => setMode(Mode.Playing)}>Hello</div>;
+  return (
+    <div
+      className="d-flex flex-column align-items-center justify-content-center width-full height-full"
+      onClick={() => setMode(Mode.Playing)}
+    >
+      <div>
+        <h1>Quicktime Event Trainer</h1>
+      </div>
+      <div className="mt-5 text-center">
+        <Icon>
+          <GiTriangleTarget />
+        </Icon>
+        <div className="d-flex">
+          <Icon>
+            <IoIosSquareOutline />
+          </Icon>
+          <div>
+            <div>
+              <FaArrowUp />
+            </div>
+            <div>
+              <FaArrowLeft />
+              <FaArrowDown />
+              <FaArrowRight />
+            </div>
+          </div>
+          <Icon>
+            <IoIosRadioButtonOff />
+          </Icon>
+        </div>
+        <Icon>
+          <MdClear />
+        </Icon>
+      </div>
+      <div className="mt-5">Click anywhere to play.</div>
+    </div>
+  );
 }
 
 function App() {
