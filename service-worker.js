@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/quicktime-event-trainer/precache-manifest.a18a36fc9f21ad3e906509d709fb0c82.js"
+  "/quicktime-event-trainer/precache-manifest.8bbadd08838b92f66f3b3d657c009352.js"
 );
 
 workbox.clientsClaim();
