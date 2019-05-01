@@ -38,8 +38,7 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
   const [iconName, setIconName] = React.useState<string>("empty");
 
   React.useEffect(() => {
-    let timer: any;
-    timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       const index = _.random(0, 3);
       const mapping: { [key: number]: string } = {
         0: "x",
