@@ -38,7 +38,7 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
   const [iconName, setIconName] = React.useState<string>("empty");
 
   React.useEffect(() => {
-    let timer: number;
+    let timer: number | undefined = undefined;
 
     function updateIcon() {
       // Reset user input
@@ -61,12 +61,17 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
       // Recursively continue
       timer = window.setTimeout(updateIcon, 1000);
     }
-    updateIcon();
+
+    if (mode === Mode.Paused) {
+      window.clearTimeout(timer);
+    } else {
+      updateIcon();
+    }
 
     return () => {
-      window.clearInterval(timer);
+      window.clearTimeout(timer);
     };
-  }, []);
+  }, [mode]);
 
   useKey(
     (pressedKey: number, event: any) => {
@@ -101,9 +106,15 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
       <div>
         <button
           className="btn btn-secondary-outline"
-          onClick={() => setMode(Mode.Paused)}
+          onClick={() => {
+            if (mode === Mode.Paused) {
+              setMode(Mode.Playing);
+            } else if (mode === Mode.Playing) {
+              setMode(Mode.Paused);
+            }
+          }}
         >
-          Pause
+          {mode === Mode.Paused ? "Resume" : "Pause"}
         </button>
       </div>
     </div>
