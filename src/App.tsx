@@ -38,7 +38,13 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
   const [iconName, setIconName] = React.useState<string>("empty");
 
   React.useEffect(() => {
-    const timer = window.setInterval(() => {
+    let timer: number;
+
+    function updateIcon() {
+      // Reset user input
+      setIconPressed(null);
+
+      // Set new icon
       const index = _.random(0, 3);
       const mapping: { [key: number]: string } = {
         0: "x",
@@ -46,16 +52,21 @@ function Trainer({ mode, setMode }: { mode: Mode; setMode: Function }) {
         2: "square",
         3: "triangle"
       };
-      const iconName: string = mapping[index];
-      setIconName(iconName);
-      setCountAttempts(countAttempts + 1);
-      setIconPressed(null);
-    }, 1000);
+      const newIconName = mapping[index];
+      setIconName(newIconName);
+
+      // Use "functional updater form": https://overreacted.io/a-complete-guide-to-useeffect/
+      setCountAttempts(countAttempts => countAttempts + 1);
+
+      // Recursively continue
+      timer = window.setTimeout(updateIcon, 1000);
+    }
+    updateIcon();
 
     return () => {
       window.clearInterval(timer);
     };
-  }, [countAttempts, iconName]);
+  }, []);
 
   useKey(
     (pressedKey: number, event: any) => {
